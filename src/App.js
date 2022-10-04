@@ -21,66 +21,52 @@ const App = () => {
 
   const handleEquals = () => {
     if(firstNumber !== '0' && operation !== '' && currentNumber !== '0') {
+      let result = '';
       switch (operation){
         case '+':
-          handleSumNumbers();
+          result = sumNumbers();
           break;
         case '-':
-          handleMinusNumbers();
+          result = minusNumbers();
           break;
         case '*':
-          handleMultiplyNumbers();
+          result = multiplyNumbers();
           break;
         case '/':
-          handleDivideNumbers();
+          result = divideNumbers();
           break;
         default:
           break;
       }
+      setCurrentNumber(result);
+      setFirstNumber('0')
     }
   }
 
-  const handleSumNumbers = () => {
-    if(firstNumber === '0') {
-      setFirstNumber(currentNumber);
-      setCurrentNumber('0');
-      setOperation('+')
-    } else {
-      const sum = Number(firstNumber) + Number(currentNumber);
-      setCurrentNumber(String(sum))
-    }
+  const sumNumbers = () => {
+    return Number(firstNumber) + Number(currentNumber);
   }
 
-  const handleMinusNumbers = () => {
-    if(firstNumber === '0') {
-      setFirstNumber(currentNumber);
-      setCurrentNumber('0');
-      setOperation('-')
-    } else {
-      const result = Number(firstNumber) - Number(currentNumber) ;
-      setCurrentNumber(String(result))
-    }
+  const minusNumbers = () => {
+    return Number(firstNumber) - Number(currentNumber);
   }
 
-  const handleDivideNumbers = () => {
-    if(firstNumber === '0') {
-      setFirstNumber(currentNumber);
-      setCurrentNumber('0');
-      setOperation('/')
-    } else {
-      const result = Number(firstNumber) / Number(currentNumber) ;
-      setCurrentNumber(String(result))
-    }
+  const divideNumbers = () => {
+    return Number(firstNumber) / Number(currentNumber);
   }
   
-  const handleMultiplyNumbers = () => {
+  const multiplyNumbers = () => {
+    return Number(firstNumber) * Number(currentNumber);
+  }
+
+  const handleOperation = (operator) => {
     if(firstNumber === '0') {
       setFirstNumber(currentNumber);
       setCurrentNumber('0');
-      setOperation('*')
+      setOperation(operator);
     } else {
-      const result = Number(firstNumber) * Number(currentNumber) ;
-      setCurrentNumber(String(result))
+      handleEquals();
+      setOperation(operator);
     }
   }
 
@@ -90,21 +76,21 @@ const App = () => {
         <Input value={currentNumber}/>
         <Row>
           <Button label="0" onClick={() => handleAddNumber('0')}/>
-          <Button label="/" onClick={() => handleDivideNumbers()}/>
+          <Button label="/" onClick={() => handleOperation('/')}/>
           <Button label="C" onClick={() => handleOnClear()}/>
-          <Button label="X" onClick={() => handleMultiplyNumbers()}/>
+          <Button label="X" onClick={() => handleOperation('*')}/>
         </Row>
         <Row>
           <Button label="7" onClick={() => handleAddNumber('7')}/>
           <Button label="8" onClick={() => handleAddNumber('8')}/>
           <Button label="9" onClick={() => handleAddNumber('9')}/>
-          <Button label="-" onClick={() => handleMinusNumbers()}/>
+          <Button label="-" onClick={() => handleOperation('-')}/>
         </Row>
         <Row>
           <Button label="4" onClick={() => handleAddNumber('4')}/>
           <Button label="5" onClick={() => handleAddNumber('5')}/>
           <Button label="6" onClick={() => handleAddNumber('6')}/>
-          <Button label="+" onClick={() => handleSumNumbers()}/>
+          <Button label="+" onClick={() => handleOperation('+')}/>
         </Row>
         <Row>
           <Button label="1" onClick={() => handleAddNumber('1')}/>
